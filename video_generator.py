@@ -1,9 +1,11 @@
-import openai, shutil, re, os
+import openai, shutil, re, os, requests
 from requests import get
 import urllib.request
 from gtts import gTTS
 from moviepy.editor import *
 from api_key import API_KEY
+from PIL import Image
+from io import BytesIO
 
 openai.api_key = API_KEY
 
@@ -29,6 +31,22 @@ for para in paragraphs[:-1]:
     image_url = response['data'][0]['url']
     urllib.request.urlretrieve(image_url, f"images/image{i}.jpg")
     print("The Generated Image Saved in Images Folder!")
+
+
+    # openai.api_key = "YOUR_API_KEY"
+    # response = openai.Completion.create(
+    #     engine="davinci",
+    #     prompt=f"Generate an image of {para.strip()}.",
+    #     max_tokens=1024,
+    #     n=1,
+    #     stop=None,
+    #     temperature=0.7,
+    # )
+    # image_url = response.choices[0].text
+
+    # image_data = requests.get(image_url).content
+    # image = Image.open(BytesIO(image_data))
+    # # image.show()
 
     # Create gTTS instance and save to a file
     tts = gTTS(text=para, lang='en', slow=False)
