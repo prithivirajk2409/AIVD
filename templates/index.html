@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>AIVD</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+        <link href="{{url_for('static', filename = 'css/app.css')}}" rel="stylesheet">
+    </head>
+    <body>
+        <script type="text/javascript" src="{{ url_for('static', filename = 'js/app.js') }}"></script>
+        <div class="container">
+            <div class="row">
+                <h3>AI video generator</h3>
+                Enter the content you want to search for:
+                <input type='text' id='search' class="form-control" style="width:40%;"><br/>
+                <input type='button' id='but_text' value='Text Generation' class="btn btn-default">
+                <span style="display: inline-block; width: 25px;"></span>
+                <input type='button' id='but_video' value='Video Generation' class="btn btn-default"><br/>
+                <div id='loader' style='display: none;'>
+                    <img src='/static/img/loader_color.gif'> <b>Loading..</b>
+                </div>
+                <div class='response'></div>
+            </div>
+        </div>
+    </body>
+</html>
