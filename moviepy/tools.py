@@ -1,3 +1,6 @@
+"""
+Misc. useful functions that can be used at many places in the program.
+"""
 import os
 import subprocess as sp
 import sys

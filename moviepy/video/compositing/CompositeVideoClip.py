@@ -1,47 +1,6 @@
 from moviepy.audio.AudioClip import CompositeAudioClip
 from moviepy.video.VideoClip import ColorClip, VideoClip
-
-
 class CompositeVideoClip(VideoClip):
-
-    """
-
-    A VideoClip made of other videoclips displayed together. This is the
-    base class for most compositions.
-
-    Parameters
-    ----------
-
-    size
-      The size (height x width) of the final clip.
-
-    clips
-      A list of videoclips. Each clip of the list will
-      be displayed below the clips appearing after it in the list.
-      For each clip:
-
-      - The attribute ``pos`` determines where the clip is placed.
-          See ``VideoClip.set_pos``
-      - The mask of the clip determines which parts are visible.
-
-      Finally, if all the clips in the list have their ``duration``
-      attribute set, then the duration of the composite video clip
-      is computed automatically
-
-    bg_color
-      Color for the unmasked and unfilled regions. Set to None for these
-      regions to be transparent (will be slower).
-
-    use_bgclip
-      Set to True if the first clip in the list should be used as the
-      'background' on which all other clips are blitted. That first clip must
-      have the same size as the final clip. If it has no transparency, the final
-      clip will have no mask.
-
-    The clip with the highest FPS will be the FPS of the composite clip.
-
-    """
-
     def __init__(self, clips, size=None, bg_color=None, use_bgclip=False, ismask=False):
         if size is None:
             size = clips[0].size
@@ -108,6 +67,4 @@ class CompositeVideoClip(VideoClip):
         self.make_frame = make_frame
 
     def playing_clips(self, t=0):
-        """Returns a list of the clips in the composite clips that are
-        actually playing at the given time `t`."""
         return [c for c in self.clips if c.is_playing(t)]

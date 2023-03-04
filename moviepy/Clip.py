@@ -1,4 +1,5 @@
 from copy import copy
+
 import numpy as np
 import proglog
 
@@ -51,6 +52,7 @@ class Clip:
     @convert_to_seconds(["t"])
     @outplace
     def set_start(self, t, change_end=True):
+
         self.start = t
         if (self.duration is not None) and change_end:
             self.end = t + self.duration
@@ -87,6 +89,7 @@ class Clip:
 
     @convert_to_seconds(["t"])
     def is_playing(self, t):
+
         if isinstance(t, np.ndarray):
             tmin, tmax = t.min(), t.max()
 

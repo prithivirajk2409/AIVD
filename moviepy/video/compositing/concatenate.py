@@ -11,9 +11,8 @@ except NameError:  # Python 3
     from functools import reduce
 
 
-def concatenate_videoclips(
-    clips, method="chain", transition=None, bg_color=None, ismask=False, padding=0
-):
+def concatenate_videoclips(clips, method="chain", transition=None, bg_color=None, ismask=False, padding=0):
+
     tt = np.cumsum([0] + [c.duration for c in clips])
 
     sizes = [v.size for v in clips]

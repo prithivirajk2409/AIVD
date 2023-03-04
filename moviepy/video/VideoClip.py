@@ -1,16 +1,7 @@
-"""
-This module implements VideoClip (base class for video clips) and its
-main subclasses:
-- Animated clips:     VideofileClip, ImageSequenceClip
-- Static image clips: ImageClip, ColorClip, TextClip,
-"""
-import os
-import tempfile
-import warnings
 
+import os, tempfile, warnings, proglog
 import numpy as np
-import proglog
-from imageio import imread  # imsave
+from imageio import imread 
 
 from ..Clip import Clip
 from ..compat import DEVNULL, string_types
@@ -162,11 +153,6 @@ class VideoClip(Clip):
         logger(message="Moviepy - video ready %s" % filename)
 
     def blit_on(self, picture, t):
-        """
-        Returns the result of the blit of the clip's frame at time `t`
-        on the given `picture`, the position of the clip being given
-        by the clip's ``pos`` attribute. Meant for compositing.
-        """
         hf, wf = framesize = picture.shape[:2]
 
         if self.ismask and picture.max():

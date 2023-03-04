@@ -10,6 +10,7 @@ from moviepy.video.io.ffmpeg_reader import ffmpeg_parse_infos
 
 
 class FFMPEG_AudioReader:
+
     def __init__(
         self, filename, buffersize, print_infos=False, fps=44100, nbytes=2, nchannels=2
     ):

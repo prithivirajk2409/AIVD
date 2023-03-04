@@ -1,12 +1,8 @@
-import os
+import os,proglog
 import subprocess as sp
-
-import proglog
-
 from moviepy.compat import DEVNULL
 from moviepy.config import get_setting
 from moviepy.decorators import requires_duration
-
 
 class FFMPEG_AudioWriter:
     def __init__(

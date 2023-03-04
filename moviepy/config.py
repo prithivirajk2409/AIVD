@@ -2,9 +2,9 @@ import os
 import subprocess as sp
 
 from .compat import DEVNULL
+
 FFMPEG_BINARY = os.getenv("FFMPEG_BINARY", "ffmpeg-imageio")
 IMAGEMAGICK_BINARY = r"C:\Program Files\ImageMagick-7.1.0-Q16-HDRI\convert.exe"
-
 if os.name == "nt":
     try:
         import winreg as wr  # py3k
