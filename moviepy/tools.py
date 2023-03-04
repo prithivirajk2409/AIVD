@@ -5,9 +5,7 @@ from .compat import DEVNULL
 def subprocess_call(cmd, logger="bar", errorprint=True):
     logger = proglog.default_bar_logger(logger)
     logger(message='Moviepy - Running:\n>>> "+ " ".join(cmd)')
-
     popen_params = {"stdout": DEVNULL, "stderr": sp.PIPE, "stdin": DEVNULL}
-
     if os.name == "nt":
         popen_params["creationflags"] = 0x08000000
 
@@ -35,13 +33,10 @@ def is_string(obj):
 
 def cvsecs(time):
     factors = (1, 60, 3600)
-
     if is_string(time):
         time = [float(f.replace(",", ".")) for f in time.split(":")]
-
     if not isinstance(time, (tuple, list)):
         return time
-
     return sum(mult * part for mult, part in zip(factors, reversed(time)))
 
 
@@ -87,9 +82,3 @@ def find_extension(codec):
     for ext, infos in extensions_dict.items():
         if codec in infos.get("codec", []):
             return ext
-    raise ValueError(
-        "The audio_codec you chose is unknown by MoviePy. "
-        "You should report this. In the meantime, you can "
-        "specify a temp_audiofile with the right extension "
-        "in write_videofile."
-    )

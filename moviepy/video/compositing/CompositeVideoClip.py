@@ -1,5 +1,6 @@
 from moviepy.audio.AudioClip import CompositeAudioClip
 from moviepy.video.VideoClip import ColorClip, VideoClip
+
 class CompositeVideoClip(VideoClip):
     def __init__(self, clips, size=None, bg_color=None, use_bgclip=False, ismask=False):
         if size is None:
@@ -56,9 +57,6 @@ class CompositeVideoClip(VideoClip):
             )
 
         def make_frame(t):
-            """The clips playing at time `t` are blitted over one
-            another."""
-
             f = self.bg.get_frame(t)
             for c in self.playing_clips(t):
                 f = c.blit_on(f, t)

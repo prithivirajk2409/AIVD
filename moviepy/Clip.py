@@ -1,14 +1,7 @@
 from copy import copy
 import numpy as np
 import proglog
-from moviepy.decorators import (
-    apply_to_audio,
-    apply_to_mask,
-    convert_to_seconds,
-    outplace,
-    requires_duration,
-    use_clip_fps_by_default,
-)
+from moviepy.decorators import *
 
 
 class Clip:

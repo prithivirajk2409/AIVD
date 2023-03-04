@@ -1,14 +1,9 @@
-import os
-
+import os, proglog
 import numpy as np
-import proglog
 from tqdm import tqdm
-
 from moviepy.audio.io.ffmpeg_audiowriter import ffmpeg_audiowrite
 from moviepy.Clip import Clip
 from moviepy.decorators import requires_duration
-from moviepy.tools import extensions_dict
-
 
 class AudioClip(Clip):
     def __init__(self, make_frame=None, duration=None, fps=None):
@@ -18,30 +13,15 @@ class AudioClip(Clip):
             self.fps = fps
 
     @requires_duration
-    def iter_chunks(
-        self,
-        chunksize=None,
-        chunk_duration=None,
-        fps=None,
-        quantize=False,
-        nbytes=2,
-        logger=None,
-    ):
-        """Iterator that returns the whole sound array of the clip by chunks"""
-
+    def iter_chunks(self,chunksize=None,chunk_duration=None,fps=None,quantize=False,nbytes=2,logger=None,):
         totalsize = int(fps * self.duration)
-
         nchunks = totalsize // chunksize + 1
-
         pospos = np.linspace(0, totalsize, nchunks + 1, endpoint=True, dtype=int)
-
         for i in logger.iter_bar(chunk=list(range(nchunks))):
             size = pospos[i + 1] - pospos[i]
             assert size <= chunksize
             tt = (1.0 / fps) * np.arange(pospos[i], pospos[i + 1])
-            yield self.to_soundarray(
-                tt, nbytes=nbytes, quantize=quantize, fps=fps, buffersize=chunksize
-            )
+            yield self.to_soundarray(tt, nbytes=nbytes, quantize=quantize, fps=fps, buffersize=chunksize)
 
     @requires_duration
     def to_soundarray(self, tt=None, fps=None, quantize=False, nbytes=2, buffersize=50000):
@@ -55,33 +35,8 @@ class AudioClip(Clip):
         return snd_array
 
     @requires_duration
-    def write_audiofile(
-        self,
-        filename,
-        fps=None,
-        nbytes=2,
-        buffersize=2000,
-        codec=None,
-        bitrate=None,
-        ffmpeg_params=None,
-        write_logfile=False,
-        verbose=True,
-        logger="bar",
-    ):
-
-        return ffmpeg_audiowrite(
-            self,
-            filename,
-            fps,
-            nbytes,
-            buffersize,
-            codec=codec,
-            bitrate=bitrate,
-            write_logfile=write_logfile,
-            verbose=verbose,
-            ffmpeg_params=ffmpeg_params,
-            logger=logger,
-        )
+    def write_audiofile(self,filename,fps=None,nbytes=2,buffersize=2000,codec=None,bitrate=None,ffmpeg_params=None,write_logfile=False,verbose=True,logger="bar",):
+        return ffmpeg_audiowrite(self,filename,fps,nbytes,buffersize,codec=codec,bitrate=bitrate,write_logfile=write_logfile,verbose=verbose,ffmpeg_params=ffmpeg_params,logger=logger,)
 
 
 class CompositeAudioClip(AudioClip):
@@ -107,10 +62,8 @@ class CompositeAudioClip(AudioClip):
 
             if isinstance(t, np.ndarray):
                 zero = np.zeros((len(t), self.nchannels))
-
             else:
                 zero = np.zeros(self.nchannels)
-
             return zero + sum(sounds)
 
         self.make_frame = make_frame

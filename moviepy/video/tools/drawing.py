@@ -1,18 +1,6 @@
-"""
-This module deals with making images (np arrays). It provides drawing
-methods that are difficult to do with the existing Python libraries.
-"""
-
 import numpy as np
 
-
 def blit(im1, im2, pos=None, mask=None, ismask=False):
-    """Blit an image over another.
-
-    Blits ``im1`` on ``im2`` as position ``pos=(x,y)``, using the
-    ``mask`` if provided. If ``im1`` and ``im2`` are mask pictures
-    (2D float arrays) then ``ismask`` must be ``True``.
-    """
     if pos is None:
         pos = [0, 0]
 

@@ -1,5 +1,4 @@
 import numpy as np
-
 from moviepy.audio.AudioClip import CompositeAudioClip
 from moviepy.tools import deprecated_version_of
 from moviepy.video.compositing.CompositeVideoClip import CompositeVideoClip
