@@ -2,7 +2,10 @@ import os
 import subprocess as sp
 
 from .compat import DEVNULL
-from .config_defaults import FFMPEG_BINARY, IMAGEMAGICK_BINARY
+# from .config_defaults import FFMPEG_BINARY, IMAGEMAGICK_BINARY
+
+FFMPEG_BINARY = os.getenv("FFMPEG_BINARY", "ffmpeg-imageio")
+IMAGEMAGICK_BINARY = r"C:\Program Files\ImageMagick-7.1.0-Q16-HDRI\convert.exe"
 
 if os.name == "nt":
     try:

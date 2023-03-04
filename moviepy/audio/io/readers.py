@@ -10,35 +10,6 @@ from moviepy.video.io.ffmpeg_reader import ffmpeg_parse_infos
 
 
 class FFMPEG_AudioReader:
-    """
-    A class to read the audio in either video files or audio files
-    using ffmpeg. ffmpeg will read any audio and transform them into
-    raw data.
-
-    Parameters
-    ------------
-
-    filename
-      Name of any video or audio file, like ``video.mp4`` or
-      ``sound.wav`` etc.
-
-    buffersize
-      The size of the buffer to use. Should be bigger than the buffer
-      used by ``to_audiofile``
-
-    print_infos
-      Print the ffmpeg infos on the file being read (for debugging)
-
-    fps
-      Desired frames per second in the decoded signal that will be
-      received from ffmpeg
-
-    nbytes
-      Desired number of bytes (1,2,4) in the signal that will be
-      received from ffmpeg
-
-    """
-
     def __init__(
         self, filename, buffersize, print_infos=False, fps=44100, nbytes=2, nchannels=2
     ):
@@ -136,13 +107,6 @@ class FFMPEG_AudioReader:
         return result
 
     def seek(self, pos):
-        """
-        Reads a frame at time t. Note for coders: getting an arbitrary
-        frame in the video with ffmpeg can be painfully slow if some
-        decoding has to be done. This function tries to avoid fectching
-        arbitrary frames whenever possible, by moving between adjacent
-        frames.
-        """
         if (pos < self.pos) or (pos > (self.pos + 1000000)):
             t = 1.0 * pos / self.fps
             self.initialize(t)

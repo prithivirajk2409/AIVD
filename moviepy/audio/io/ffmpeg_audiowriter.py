@@ -9,31 +9,6 @@ from moviepy.decorators import requires_duration
 
 
 class FFMPEG_AudioWriter:
-    """
-    A class to write an AudioClip into an audio file.
-
-    Parameters
-    ------------
-
-    filename
-      Name of any video or audio file, like ``video.mp4`` or ``sound.wav`` etc.
-
-    size
-      Size (width,height) in pixels of the output video.
-
-    fps_input
-      Frames per second of the input audio (given by the AUdioClip being
-      written down).
-
-    codec
-      Name of the ffmpeg codec to use for the output.
-
-    bitrate:
-      A string indicating the bitrate of the final video. Only
-      relevant for codecs which accept a bitrate.
-
-    """
-
     def __init__(
         self,
         filename,
