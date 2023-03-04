@@ -11,39 +11,6 @@ from moviepy.tools import extensions_dict
 
 
 class AudioClip(Clip):
-    """Base class for audio clips.
-
-    See ``AudioFileClip`` and ``CompositeSoundClip`` for usable classes.
-
-    An AudioClip is a Clip with a ``make_frame``  attribute of
-    the form `` t -> [ f_t ]`` for mono sound and
-    ``t-> [ f1_t, f2_t ]`` for stereo sound (the arrays are Numpy arrays).
-    The `f_t` are floats between -1 and 1. These bounds can be
-    trespassed wihtout problems (the program will put the
-    sound back into the bounds at conversion time, without much impact).
-
-    Parameters
-    -----------
-
-    make_frame
-      A function `t-> frame at time t`. The frame does not mean much
-      for a sound, it is just a float. What 'makes' the sound are
-      the variations of that float in the time.
-
-    nchannels
-      Number of channels (one or two for mono or stereo).
-
-    Examples
-    ---------
-
-    >>> # Plays the note A (a sine wave of frequency 440HZ)
-    >>> import numpy as np
-    >>> make_frame = lambda t: 2*[ np.sin(440 * 2 * np.pi * t) ]
-    >>> clip = AudioClip(make_frame, duration=5)
-    >>> clip.preview()
-
-    """
-
     def __init__(self, make_frame=None, duration=None, fps=None):
         Clip.__init__(self)
 
@@ -80,31 +47,6 @@ class AudioClip(Clip):
     def to_soundarray(
         self, tt=None, fps=None, quantize=False, nbytes=2, buffersize=50000
     ):
-        """
-        Transforms the sound into an array that can be played by pygame
-        or written in a wav file. See ``AudioClip.preview``.
-
-        Parameters
-        ------------
-
-        fps
-          Frame rate of the sound for the conversion.
-          44100 for top quality.
-
-        nbytes
-          Number of bytes to encode the sound: 1 for 8bit sound,
-          2 for 16bit, 4 for 32bit sound.
-
-        """
-
-        """
-        elif len(tt)> 1.5*buffersize:
-            nchunks = int(len(tt)/buffersize+1)
-            tt_chunks = np.array_split(tt, nchunks)
-            return stacker([self.to_soundarray(tt=ttc, buffersize=buffersize, fps=fps,
-                                        quantize=quantize, nbytes=nbytes)
-                              for ttc in tt_chunks])
-        """
 
         snd_array = self.get_frame(tt)
 
