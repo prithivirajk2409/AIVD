@@ -1,18 +1,10 @@
-""" Misc. bindings to ffmpeg and ImageMagick."""
-
-import os
+import os, sys
 import subprocess as sp
-import sys
-
 from moviepy.config import get_setting
 from moviepy.tools import subprocess_call
 
 
 def ffmpeg_movie_from_frames(filename, folder, fps, digits=6, bitrate="v"):
-    """
-    Writes a movie out of the frames (picture files) in a folder.
-    Almost deprecated.
-    """
     s = "%" + "%02d" % digits + "d.png"
     cmd = [
         get_setting("FFMPEG_BINARY"),
@@ -34,8 +26,6 @@ def ffmpeg_movie_from_frames(filename, folder, fps, digits=6, bitrate="v"):
 
 
 def ffmpeg_extract_subclip(filename, t1, t2, targetname=None):
-    """Makes a new video file playing video file ``filename`` between
-    the times ``t1`` and ``t2``."""
     name, ext = os.path.splitext(filename)
     if not targetname:
         T1, T2 = [int(1000 * t) for t in [t1, t2]]
@@ -71,8 +61,6 @@ def ffmpeg_merge_video_audio(
     ffmpeg_output=False,
     logger="bar",
 ):
-    """merges video file ``video`` and audio file ``audio`` into one
-    movie file ``output``."""
     cmd = [
         get_setting("FFMPEG_BINARY"),
         "-y",
@@ -91,7 +79,6 @@ def ffmpeg_merge_video_audio(
 
 
 def ffmpeg_extract_audio(inputfile, output, bitrate=3000, fps=44100):
-    """extract the sound from a video file and save it in ``output``"""
     cmd = [
         get_setting("FFMPEG_BINARY"),
         "-y",
@@ -107,8 +94,6 @@ def ffmpeg_extract_audio(inputfile, output, bitrate=3000, fps=44100):
 
 
 def ffmpeg_resize(video, output, size):
-    """resizes ``video`` to new size ``size`` and write the result
-    in file ``output``."""
     cmd = [
         get_setting("FFMPEG_BINARY"),
         "-i",

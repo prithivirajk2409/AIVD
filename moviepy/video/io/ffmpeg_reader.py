@@ -1,18 +1,7 @@
-"""
-This module implements all the functions to read a video or a picture
-using ffmpeg. It is quite ugly, as there are many pitfalls to avoid
-"""
-
 from __future__ import division
-
-import logging
-import os
-import re
+import logging, os, re, warnings
 import subprocess as sp
-import warnings
-
 import numpy as np
-
 from moviepy.compat import DEVNULL, PY3
 from moviepy.config import get_setting  # ffmpeg, ffmpeg.exe, etc...
 from moviepy.tools import cvsecs
@@ -168,14 +157,6 @@ class FFMPEG_VideoReader:
         return result
 
     def get_frame(self, t):
-        """Read a file video frame at time t.
-
-        Note for coders: getting an arbitrary frame in the video with
-        ffmpeg can be painfully slow if some decoding has to be done.
-        This function tries to avoid fetching arbitrary frames
-        whenever possible, by moving between adjacent frames.
-        """
-
         pos = int(self.fps * t + 0.00001) + 1
 
         if not self.proc:
@@ -209,25 +190,6 @@ class FFMPEG_VideoReader:
 
 
 def ffmpeg_read_image(filename, with_mask=True):
-    """Read an image file (PNG, BMP, JPEG...).
-
-    Wraps FFMPEG_Videoreader to read just one image.
-    Returns an ImageClip.
-
-    This function is not meant to be used directly in MoviePy,
-    use ImageClip instead to make clips out of image files.
-
-    Parameters
-    -----------
-
-    filename
-      Name of the image file. Can be of any format supported by ffmpeg.
-
-    with_mask
-      If the image has a transparency layer, ``with_mask=true`` will save
-      this layer as the mask of the returned ImageClip
-
-    """
     pix_fmt = "rgba" if with_mask else "rgb24"
     reader = FFMPEG_VideoReader(filename, pix_fmt=pix_fmt, check_duration=False)
     im = reader.lastread
@@ -238,16 +200,6 @@ def ffmpeg_read_image(filename, with_mask=True):
 def ffmpeg_parse_infos(
     filename, print_infos=False, check_duration=True, fps_source="tbr"
 ):
-    """Get file infos using ffmpeg.
-
-    Returns a dictionnary with the fields:
-    "video_found", "video_fps", "duration", "video_nframes",
-    "video_duration", "audio_found", "audio_fps"
-
-    "video_duration" is slightly smaller than "duration" to avoid
-    fetching the uncomplete frames at the end, which raises an error.
-
-    """
 
     is_GIF = filename.endswith(".gif")
     cmd = [get_setting("FFMPEG_BINARY"), "-i", filename]

@@ -1,70 +1,12 @@
-"""
-On the long term this will implement several methods to make videos
-out of VideoClips
-"""
-
 import os
 import subprocess as sp
-
 import numpy as np
 from proglog import proglog
-
 from moviepy.compat import DEVNULL, PY3
 from moviepy.config import get_setting
 
 
 class FFMPEG_VideoWriter:
-    """A class for FFMPEG-based video writing.
-
-    A class to write videos using ffmpeg. ffmpeg will write in a large
-    choice of formats.
-
-    Parameters
-    -----------
-
-    filename
-      Any filename like 'video.mp4' etc. but if you want to avoid
-      complications it is recommended to use the generic extension
-      '.avi' for all your videos.
-
-    size
-      Size (width,height) of the output video in pixels.
-
-    fps
-      Frames per second in the output video file.
-
-    codec
-      FFMPEG codec. It seems that in terms of quality the hierarchy is
-      'rawvideo' = 'png' > 'mpeg4' > 'libx264'
-      'png' manages the same lossless quality as 'rawvideo' but yields
-      smaller files. Type ``ffmpeg -codecs`` in a terminal to get a list
-      of accepted codecs.
-
-      Note for default 'libx264': by default the pixel format yuv420p
-      is used. If the video dimensions are not both even (e.g. 720x405)
-      another pixel format is used, and this can cause problem in some
-      video readers.
-
-    audiofile
-      Optional: The name of an audio file that will be incorporated
-      to the video.
-
-    preset
-      Sets the time that FFMPEG will take to compress the video. The slower,
-      the better the compression rate. Possibilities are: ultrafast,superfast,
-      veryfast, faster, fast, medium (default), slow, slower, veryslow,
-      placebo.
-
-    bitrate
-      Only relevant for codecs which accept a bitrate. "5000k" offers
-      nice results in general.
-
-    withmask
-      Boolean. Set to ``True`` if there is a mask in the video to be
-      encoded.
-
-    """
-
     def __init__(
         self,
         filename,
@@ -219,9 +161,6 @@ def ffmpeg_write_video(
     ffmpeg_params=None,
     logger="bar",
 ):
-    """Write the clip to a videofile. See VideoClip.write_videofile for details
-    on the parameters.
-    """
     logger = proglog.default_bar_logger(logger)
 
     if write_logfile:
@@ -260,9 +199,6 @@ def ffmpeg_write_video(
 
 
 def ffmpeg_write_image(filename, image, logfile=False):
-    """Writes an image (HxWx3 or HxWx4 numpy array) to a file, using
-    ffmpeg."""
-
     if image.dtype != "uint8":
         image = image.astype("uint8")
 

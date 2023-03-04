@@ -25,8 +25,6 @@ from .tools.drawing import blit
 
 
 class VideoClip(Clip):
-    """Base class for video clips.
-    """
     def __init__(
         self, make_frame=None, ismask=False, duration=None, has_constant_size=True
     ):

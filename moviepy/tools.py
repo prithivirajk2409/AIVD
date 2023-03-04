@@ -1,15 +1,6 @@
-"""
-Misc. useful functions that can be used at many places in the program.
-"""
-import os
+import os, sys, warnings, proglog
 import subprocess as sp
-import sys
-import warnings
-
-import proglog
-
 from .compat import DEVNULL
-
 
 def subprocess_call(cmd, logger="bar", errorprint=True):
     logger = proglog.default_bar_logger(logger)
