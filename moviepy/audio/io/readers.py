@@ -176,11 +176,6 @@ class FFMPEG_AudioReader:
             return self.buffer[ind - self.buffer_startframe]
 
     def buffer_around(self, framenumber):
-        """
-        Fills the buffer with frames, centered on ``framenumber``
-        if possible
-        """
-
         new_bufferstart = max(0, framenumber - self.buffersize // 2)
 
         if self.buffer is not None:

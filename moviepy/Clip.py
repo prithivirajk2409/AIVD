@@ -1,8 +1,6 @@
 from copy import copy
-
 import numpy as np
 import proglog
-
 from moviepy.decorators import (
     apply_to_audio,
     apply_to_mask,
