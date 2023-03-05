@@ -9,7 +9,7 @@ openai.api_key = API_KEY
 with open("generated_text.txt", "r") as file:
     text = file.read()
 
-paragraphs = re.split(r"[,.]", text)
+paragraphs = re.split(r"[.]", text)
 
 os.makedirs("audio")
 os.makedirs("images")
@@ -17,6 +17,8 @@ os.makedirs("videos")
 
 i=1
 for para in paragraphs[:-1]:
+    if(para.strip().isdigit()):
+        continue
     response = openai.Image.create(
         prompt=para.strip(),
         n=1,
